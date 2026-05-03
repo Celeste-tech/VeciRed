@@ -1,0 +1,10 @@
+module.exports = {
+  extends: [
+    'react-app',
+    'prettier'
+  ],
+  rules: {
+    'no-unused-vars': 'warn',
+    'no-console': 'warn'
+  }
+}
