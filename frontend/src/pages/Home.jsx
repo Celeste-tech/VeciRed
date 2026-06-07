@@ -12,38 +12,56 @@ export default function Home() {
 
   return (
     <div style={styles.container}>
-      <div style={styles.navbar}>
-        <h2 style={styles.logo}>VeciRed</h2>
-        <div>
-          <span style={styles.bienvenida}>Hola, {usuario?.nombre}</span>
-          <button style={styles.botonLogout} onClick={handleLogout}>Cerrar sesión</button>
+      <div style={styles.header}>
+        <h1 style={styles.logo}>🏘️ VeciRed</h1>
+        <div style={styles.headerRight}>
+          {usuario && <span style={styles.bienvenida}>Hola, {usuario.nombre}</span>}
+          {usuario?.rol === 'prestador' && (
+            <button style={styles.btnSecundario} onClick={() => navigate('/dashboard')}>
+              Mi perfil
+            </button>
+          )}
+          {usuario?.rol === 'administrador' && (
+            <button style={styles.btnSecundario} onClick={() => navigate('/admin')}>
+              Panel admin
+            </button>
+          )}
+          <button style={styles.btnLogout} onClick={handleLogout}>Salir</button>
         </div>
       </div>
-      <div style={styles.contenido}>
-        <h1 style={styles.titulo}>Encuentra servicios en tu barrio</h1>
-        <p style={styles.subtitulo}>Conecta con prestadores de confianza en tu comunidad</p>
-        <div style={styles.cards}>
-          <div style={styles.card}>⚡ Electricidad</div>
-          <div style={styles.card}>🔧 Plomería</div>
-          <div style={styles.card}>🎨 Pintura</div>
-          <div style={styles.card}>🪵 Carpintería</div>
-          <div style={styles.card}>🌿 Jardinería</div>
-          <div style={styles.card}>🧵 Costura</div>
-        </div>
+
+      <div style={styles.hero}>
+        <h2 style={styles.heroTitle}>Talento de confianza, a la vuelta de tu casa</h2>
+        <p style={styles.heroSub}>Encuentra electricistas, plomeros, pintores y más en tu comuna</p>
+        <button style={styles.btnPrimario} onClick={() => navigate('/busqueda')}>
+          Buscar servicios
+        </button>
+      </div>
+
+      <div style={styles.categorias}>
+        {['Electricidad','Plomería','Pintura','Costura','Carpintería','Jardinería','Cerrajería','Techado'].map(cat => (
+          <div key={cat} style={styles.catCard} onClick={() => navigate(`/busqueda?categoria=${cat}`)}>
+            <span style={styles.catNombre}>{cat}</span>
+          </div>
+        ))}
       </div>
     </div>
   );
 }
 
 const styles = {
-  container: { minHeight: '100vh', backgroundColor: '#f0f4f8' },
-  navbar: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#2d6a4f', padding: '1rem 2rem' },
-  logo: { color: 'white', margin: 0 },
-  bienvenida: { color: 'white', marginRight: '1rem' },
-  botonLogout: { padding: '0.5rem 1rem', backgroundColor: 'white', color: '#2d6a4f', border: 'none', borderRadius: '8px', cursor: 'pointer' },
-  contenido: { padding: '3rem 2rem', textAlign: 'center' },
-  titulo: { color: '#2d6a4f', fontSize: '2rem' },
-  subtitulo: { color: '#666', marginBottom: '2rem' },
-  cards: { display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '1rem' },
-  card: { backgroundColor: 'white', padding: '1.5rem 2rem', borderRadius: '12px', boxShadow: '0 2px 10px rgba(0,0,0,0.08)', fontSize: '1.1rem', cursor: 'pointer' },
+  container: { minHeight: '100vh', backgroundColor: '#F8F9FA', fontFamily: 'sans-serif' },
+  header: { backgroundColor: '#2D6A4F', padding: '16px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
+  logo: { color: 'white', margin: 0, fontSize: 24 },
+  headerRight: { display: 'flex', gap: 12, alignItems: 'center' },
+  bienvenida: { color: 'white', fontSize: 14 },
+  btnSecundario: { padding: '8px 16px', backgroundColor: '#52B788', color: 'white', border: 'none', borderRadius: 8, cursor: 'pointer' },
+  btnLogout: { padding: '8px 16px', backgroundColor: 'transparent', color: 'white', border: '1px solid white', borderRadius: 8, cursor: 'pointer' },
+  hero: { textAlign: 'center', padding: '60px 32px', backgroundColor: '#2D6A4F' },
+  heroTitle: { color: 'white', fontSize: 32, margin: '0 0 12px' },
+  heroSub: { color: '#B7E4C7', fontSize: 18, margin: '0 0 32px' },
+  btnPrimario: { padding: '14px 32px', backgroundColor: '#FFB703', color: '#1B1B1B', border: 'none', borderRadius: 8, fontSize: 16, fontWeight: 'bold', cursor: 'pointer' },
+  categorias: { display: 'flex', flexWrap: 'wrap', gap: 16, padding: 32, justifyContent: 'center' },
+  catCard: { backgroundColor: 'white', border: '1px solid #ddd', borderRadius: 12, padding: '20px 28px', cursor: 'pointer', boxShadow: '0 2px 8px rgba(0,0,0,0.08)', transition: 'transform 0.2s' },
+  catNombre: { fontSize: 16, color: '#2D6A4F', fontWeight: '600' },
 };
