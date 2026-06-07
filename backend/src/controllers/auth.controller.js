@@ -2,6 +2,20 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const usuarioModel = require('../models/usuario.model');
 
+/**
+ * Registra un nuevo usuario en el sistema.
+ * @async
+ * @param {Object} req - Request de Express
+ * @param {Object} req.body - Cuerpo de la petición
+ * @param {string} req.body.nombre - Nombre del usuario
+ * @param {string} req.body.correo - Correo electrónico único
+ * @param {string} req.body.contrasena - Contraseña en texto plano
+ * @param {string} req.body.rol - Rol del usuario (vecino|prestador|administrador)
+ * @param {Object} res - Response de Express
+ * @returns {Object} 201 - Usuario creado exitosamente
+ * @returns {Object} 400 - Correo ya registrado
+ * @returns {Object} 500 - Error del servidor
+ */
 const registro = async (req, res) => {
   try {
     const { nombre, correo, contrasena, rol } = req.body;
@@ -18,6 +32,18 @@ const registro = async (req, res) => {
   }
 };
 
+/**
+ * Autentica un usuario y retorna un token JWT.
+ * @async
+ * @param {Object} req - Request de Express
+ * @param {Object} req.body - Cuerpo de la petición
+ * @param {string} req.body.correo - Correo electrónico del usuario
+ * @param {string} req.body.contrasena - Contraseña en texto plano
+ * @param {Object} res - Response de Express
+ * @returns {Object} 200 - Token JWT y datos del usuario
+ * @returns {Object} 401 - Credenciales inválidas
+ * @returns {Object} 500 - Error del servidor
+ */
 const login = async (req, res) => {
   try {
     const { correo, contrasena } = req.body;
