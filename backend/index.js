@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Leer .env manualmente (evita interferencia de dotenvx)
-const envPath = path.join(__dirname, 'src', '.env');
+const envPath = path.join(__dirname, '.env');
 const envContent = fs.readFileSync(envPath, 'utf8');
 envContent.split('\n').forEach(line => {
   const [key, ...vals] = line.split('=');
